@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseDatabase
 
-class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     private var users = [User]();
     
@@ -89,7 +89,13 @@ class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     @IBAction func takePicture(_ sender: Any) {
-        
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            let imagePicker = UIImagePickerController();
+            imagePicker.delegate = self;
+            imagePicker.sourceType = .camera;
+            imagePicker.allowsEditing = false;
+            self.present(imagePicker, animated: true, completion: nil);
+        }
         
     }
     
