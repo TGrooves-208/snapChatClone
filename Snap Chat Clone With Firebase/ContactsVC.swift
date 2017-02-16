@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -17,8 +18,39 @@ class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getUsers();
 
-        // Do any additional setup after loading the view.
+    }
+    
+    private func getUsers() {
+        DBProvider.instance.usersRef.observeSingleEvent(of: FIRDataEventType.value) { (snapshot:FIRDataSnapshot) in
+            
+            if let myUsers = snapshot.value as? Dictionary<String, AnyObject> {
+                
+                for (key, value) in myUsers {
+                    
+                    if let userData = value as? Dictionary<String, AnyObject> {
+                        
+                        if let data = userData["data"] as? Dictionary<String, AnyObject> {
+                            
+                            if let email = data["email"] as? String {
+                                
+                                let id = key;
+                                let newUser = User(id: id, email: email);
+                                self.users.append(newUser);
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                }
+                
+            }
+            self.contactsTableView.reloadData();
+            
+        }
     }
     
     
@@ -41,7 +73,7 @@ class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     @IBAction func logOut(_ sender: Any) {
-        if !AuthProvider.instance.logOut() {
+        if AuthProvider.instance.logOut() {
             dismiss(animated: true, completion: nil);
         } else {
             showAlertMessage(title: "Could Not Log Out", message: "We Have A Problem Connecting To The Database to Log Out, Please Try Again");
