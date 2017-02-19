@@ -9,12 +9,15 @@
 import UIKit
 import MobileCoreServices
 import FirebaseDatabase
+import FirebaseAuth
 
 class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     private var users = [User]();
     
     @IBOutlet weak var contactsTableView: UITableView!
+    
+    private var index = -1;
     
 
     override func viewDidLoad() {
@@ -28,10 +31,21 @@ class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
-            print("We Go An Image Woooo");
+            let imgData = UIImageJPEGRepresentation(pickedImage, 0.8)!
+                as Data
             
-        } else {
-            print("We Got A Video");
+            let imgName = "\(NSUUID().uuidString).jpg";
+            DBProvider.instance.saveImage(data: imgData, name: imgName);
+            
+            dismiss(animated: true, completion: nil);
+            
+        } else if let pickedVideoURL = info [UIImagePickerControllerMediaURL] as? URL {
+            
+            let videoName = "\(NSUUID().uuidString)\(pickedVideoURL)";
+            
+            DBProvider.instance.saveVideo(url:pickedVideoURL, name: videoName);
+            
+            dismiss(animated: true, completion: nil);
         }
     }
     
@@ -83,6 +97,10 @@ class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         return cell;
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        index = indexPath.row;
+    }
+    
     
     @IBAction func logOut(_ sender: Any) {
         if AuthProvider.instance.logOut() {
@@ -103,6 +121,27 @@ class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     }
     
     @IBAction func sendImageOrVideo(_ sender: Any) {
+        
+        if index != -1 {
+            
+            if DBProvider.instance.imageURL != nil {
+                
+                DBProvider.instance.setMessageAndMEdia(senderID: FIRAuth.auth()!.currentUser!.uid, sendingTo: users[index].id, mediaURL: DBProvider.instance.imageURL!.absoluteString, message: "This is my cool image");
+                
+                index = -1;
+                
+            } else if DBProvider.instance.videoURL != nil {
+                DBProvider.instance.setMessageAndMEdia(senderID: FIRAuth.auth()!.currentUser!.uid, sendingTo: users[index].id, mediaURL: DBProvider.instance.videoURL!.absoluteString, message: "This is my cool video");
+                
+                index = -1;
+                
+            } else {
+                showAlertMessage(title: "No Data To Send", message: "Please Select A Video Or An Image To Send");
+            }
+            
+        } else {
+            showAlertMessage(title: "Select A User", message: "Please Select A User to Send a Message To");
+        }
         
     }
     

@@ -22,6 +22,7 @@
 		1BB196271E4AD1F100540CA0 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB196261E4AD1F100540CA0 /* CustomButton.swift */; };
 		1BB196291E4BACD700540CA0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1BB196281E4BACD700540CA0 /* GoogleService-Info.plist */; };
 		1BC6420E1E4C0EA4007738C2 /* AuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC6420D1E4C0EA4007738C2 /* AuthProvider.swift */; };
+		1BF0CD6E1E5A3E4100E5027A /* ShowMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0CD6D1E5A3E4100E5027A /* ShowMessageVC.swift */; };
 		3D81F413C6E5B7A6ABC9EDEC /* Pods_Snap_Chat_Clone_With_FirebaseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3FA347BFD55937029C2EE47 /* Pods_Snap_Chat_Clone_With_FirebaseTests.framework */; };
 		C11EDCDDFD52389DE8512267 /* Pods_Snap_Chat_Clone_With_Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E4FFA94C8C3EEF3ACE95DC /* Pods_Snap_Chat_Clone_With_Firebase.framework */; };
 /* End PBXBuildFile section */
@@ -65,6 +66,7 @@
 		1BB196281E4BACD700540CA0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1BC6420D1E4C0EA4007738C2 /* AuthProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthProvider.swift; sourceTree = "<group>"; };
 		1BC6420F1E4C22E6007738C2 /* Snap Chat Clone With Firebase.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Snap Chat Clone With Firebase.entitlements"; sourceTree = "<group>"; };
+		1BF0CD6D1E5A3E4100E5027A /* ShowMessageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMessageVC.swift; sourceTree = "<group>"; };
 		25E4FFA94C8C3EEF3ACE95DC /* Pods_Snap_Chat_Clone_With_Firebase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Snap_Chat_Clone_With_Firebase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F87105057B0D3896FD72CBA /* Pods-Snap Chat Clone With FirebaseTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snap Chat Clone With FirebaseTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Snap Chat Clone With FirebaseTests/Pods-Snap Chat Clone With FirebaseTests.release.xcconfig"; sourceTree = "<group>"; };
 		94E21DEF5DBF25C1A53C4B19 /* Pods-Snap Chat Clone With FirebaseUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snap Chat Clone With FirebaseUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Snap Chat Clone With FirebaseUITests/Pods-Snap Chat Clone With FirebaseUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			children = (
 				1BB195F21E4ABE2400540CA0 /* LoginVC.swift */,
 				1B2A6ED81E4BB8CA0046CEE2 /* ContactsVC.swift */,
+				1BF0CD6D1E5A3E4100E5027A /* ShowMessageVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -512,6 +515,7 @@
 				1BB195F31E4ABE2400540CA0 /* LoginVC.swift in Sources */,
 				1BB195F11E4ABE2400540CA0 /* AppDelegate.swift in Sources */,
 				1BB196251E4AC50A00540CA0 /* CustomTextField.swift in Sources */,
+				1BF0CD6E1E5A3E4100E5027A /* ShowMessageVC.swift in Sources */,
 				1B869F271E51457700C4D7EC /* DBProvider.swift in Sources */,
 				1BC6420E1E4C0EA4007738C2 /* AuthProvider.swift in Sources */,
 				1B2A6EDB1E4BC0F50046CEE2 /* Users.swift in Sources */,
