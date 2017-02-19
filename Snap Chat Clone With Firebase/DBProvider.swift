@@ -21,10 +21,10 @@ class DBProvider {
     private let IMAGE_STORAGE = "images";
     private let VIDEO_STORAGE = "videos";
     
-    private let SENDER_ID = "senderID";
-    private let RECEIVER = "receiver";
-    private let MEDIA_URL = "mediaURL";
-    private let MESSAGE = "message";
+    let SENDER_ID = "senderID";
+    let RECEIVER = "receiver";
+    let MEDIA_URL = "mediaURL";
+    let MESSAGE = "message";
     
     var imageURL: URL?;
     var videoURL: URL?;
@@ -39,6 +39,10 @@ class DBProvider {
     
     var usersRef: FIRDatabaseReference {
         return dbRef.child(USERS);
+    }
+    
+    var messageRef: FIRDatabaseReference {
+        return dbRef.child(CHILD_MESSAGE);
     }
     
     // Reference to our Firebase URL located in the storage section in the Firebase console

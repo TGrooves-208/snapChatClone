@@ -24,6 +24,8 @@ class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         super.viewDidLoad()
         
         getUsers();
+        
+        checkForMessages();
 
     }
     
@@ -46,6 +48,36 @@ class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             DBProvider.instance.saveVideo(url:pickedVideoURL, name: videoName);
             
             dismiss(animated: true, completion: nil);
+        }
+    }
+    
+    private func checkForMessages() {
+        
+        DBProvider.instance.messageRef.observeSingleEvent(of: FIRDataEventType.value) { (snapshot: FIRDataSnapshot) in
+            
+            if let receivedMessage = snapshot.value as? Dictionary< String, AnyObject> {
+                
+                for (_, value) in receivedMessage {
+                    
+                    if let message = value as? Dictionary<String, String> {
+                        
+                        let mediaURL = message[DBProvider.instance.MEDIA_URL];
+                        
+                        let msg = message[DBProvider.instance.MESSAGE];
+                        
+                        let receiverID = message[DBProvider.instance.RECEIVER];
+                        let senderID = message[DBProvider.instance.SENDER_ID];
+                        
+                        if receiverID == FIRAuth.auth()!.currentUser!.uid {
+                            
+                            self.messageReceived(title: "You Recieved A Message From User \(senderID!)", message: msg!, mediaURL: mediaURL!);
+                            
+                        }
+                        
+                    }
+                }
+            }
+            
         }
     }
     
@@ -176,6 +208,34 @@ class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         alert.addAction(ok);
         self.present(alert, animated: true, completion: nil);
         
+    }
+    
+    private func messageReceived(title: String, message: String, mediaURL: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert);
+        
+        let yes = UIAlertAction(title: "Yes", style: .default) { (alertAction: UIAlertAction) in
+            self.performSegue(withIdentifier: "ShowMessageVC", sender: mediaURL);
+            
+        }
+        
+        let no = UIAlertAction(title: "No", style: .cancel, handler: nil);
+        
+        alert.addAction(no);
+        
+        self.present(alert, animated: true, completion: nil);
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let destination = segue.destination as? ShowMessageVC {
+            
+            if let mediaURL = sender as? String {
+                
+                destination.mediaURL = mediaURL;
+            }
+        }
     }
 
 
