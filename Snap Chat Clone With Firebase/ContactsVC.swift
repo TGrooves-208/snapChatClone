@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MobileCoreServices
 import FirebaseDatabase
 
 class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
@@ -21,6 +22,17 @@ class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         getUsers();
 
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
+            print("We Go An Image Woooo");
+            
+        } else {
+            print("We Got A Video");
+        }
     }
     
     private func getUsers() {
@@ -81,7 +93,13 @@ class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     }
     
     @IBAction func openGallery(_ sender: Any) {
-        
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
+            let imagePicker = UIImagePickerController();
+            imagePicker.delegate = self;
+            imagePicker.sourceType = .photoLibrary;
+            imagePicker.allowsEditing = false;
+            self.present(imagePicker, animated: true, completion: nil);
+        }
     }
     
     @IBAction func sendImageOrVideo(_ sender: Any) {
@@ -100,7 +118,15 @@ class ContactsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     }
     
     @IBAction func takeVideo(_ sender: Any) {
-        
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            let imagePicker = UIImagePickerController();
+            imagePicker.sourceType = .camera;
+            imagePicker.mediaTypes = [kUTTypeMovie as String];
+            imagePicker.allowsEditing = false;
+            imagePicker.delegate = self;
+            present(imagePicker, animated: true)
+            
+        }
         
     }
     
